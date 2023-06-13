@@ -8,8 +8,6 @@ class CreateArtworks < ActiveRecord::Migration[7.0]
       t.string :city
       t.string :country
       t.string :continent
-
-      t.timestamps
     end
   end
 end

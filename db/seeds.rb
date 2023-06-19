@@ -44,7 +44,7 @@ artist2.artworks.create!([
     }
 ])
 
-artist3 = Artist.create!(name: "Vincent van Gogh", country: "Netherlands", period: "Postimpresionism")
+artist3 = Artist.create!(name: "Vincent van Gogh", country: "Netherlands", period: "Postimpressionism")
 artist3.artworks.create!([
     {
         title: "The Starry Night",

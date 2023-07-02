@@ -1,4 +1,4 @@
-class ArtistsController < ApplicationController
+class Api::V1::ArtistsController < Api::V1::ApplicationController
   def index
     @artists = Artist.all
     @artists = @artists.where("lower(name) = ?", params[:name].downcase) if params[:name]

@@ -1,4 +1,4 @@
-class ArtworksController < ApplicationController
+class Api::V1::ArtworksController < Api::V1::ApplicationController
   def index
     @artworks = Artwork.all
     @artworks = @artworks.where("lower(title) = ?", params[:title].downcase) if params[:title]

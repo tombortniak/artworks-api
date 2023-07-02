@@ -5,4 +5,5 @@ Rails.application.routes.draw do
       resources :artworks, only: [:index, :show]
     end
   end
+  match "*path", to: "api/v1/errors#not_found", via: :all
 end

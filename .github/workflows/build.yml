@@ -25,6 +25,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundler install
       - name: Gems check
         run: |
           gem list

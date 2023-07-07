@@ -25,18 +25,16 @@ jobs:
         uses: ruby/setup-ruby@v1
       - name: Install dependencies
         run: |
+          sudo apt-get -yqq install libpq-dev
           gem install bundler
           bundler install
-      - name: Gems check
-        run: |
-          gem list
       - name: Run tests
         env:
           RAILS_ENV: test
           RAILS_TEST_KEY: ${{ secrets.RAILS_TEST_KEY }}
         run: |
-          bin/rails db:create RAILS_ENV=test
-          bin/rails db:schema:load RAILS_ENV=test
+          bin/rails db:create
+          bin/rails db:migrate
           bundle exec rspec
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

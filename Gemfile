@@ -19,8 +19,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 gem "simplecov", require: false, group: :test
-
-gem "simplecov-json", require: false, group: :test
+gem "simplecov_json_formatter", require: false, group: :test
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

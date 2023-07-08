@@ -14,6 +14,8 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require "simplecov"
+require "simplecov-json"
+SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
 SimpleCov.start
 
 RSpec.configure do |config|

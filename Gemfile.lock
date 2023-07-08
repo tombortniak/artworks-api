@@ -194,6 +194,7 @@ DEPENDENCIES
   rails (~> 7.0.5)
   rspec-rails
   simplecov
+  simplecov_json_formatter
   tzinfo-data
 
 RUBY VERSION

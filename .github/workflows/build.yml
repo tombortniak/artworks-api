@@ -41,6 +41,10 @@ jobs:
           bin/rails db:migrate
           bin/rails db:seed
           bundle exec rspec
+      - name: Set test coverage paths
+        working-directory: ./coverage
+        run: |
+          sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.json
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:

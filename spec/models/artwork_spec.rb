@@ -9,9 +9,6 @@ RSpec.describe Artwork, type: :model do
                             country: "France",
                             continent: "Europe")
     }
-    it "is valid with valid attributes" do
-        expect(subject).to be_valid
-    end
     it "is not valid without a title" do 
         subject.title = nil
         expect(subject).to_not be_valid

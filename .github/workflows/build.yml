@@ -2,21 +2,50 @@ name: Build
 on:
   push:
     branches:
-      - master
-      - develop
-      - feature*
-      - bugfix*
-      - hotfix*
+      - '**'
   pull_request:
-    types: [opened, synchronize, reopened]
 jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
+    services:
+      database:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Install dependencies
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          gem install bundler
+          bundler install
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |
+          bin/rails db:drop
+          bin/rails db:create
+          bin/rails db:migrate
+          bundle exec rspec
+      - name: Set test coverage paths
+        working-directory: ./coverage
+        run: |
+          sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.json
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:

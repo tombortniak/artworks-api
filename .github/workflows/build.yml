@@ -41,7 +41,6 @@ jobs:
           bin/rails db:drop
           bin/rails db:create
           bin/rails db:migrate
-          bin/rails db:seed
           bundle exec rspec
       - name: Set test coverage paths
         working-directory: ./coverage

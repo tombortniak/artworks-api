@@ -25,6 +25,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    restart: always
     networks:
       - artworks-network
 

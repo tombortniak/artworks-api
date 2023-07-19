@@ -10,8 +10,18 @@ services:
     ports:
       - 5433:5432
     healthcheck:
-      test: ["CMD", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      test: ["CMD", "pg_isready"]
       interval: 5s
       timeout: 5s
       retries: 3
-    restart: always      
+    restart: always
+  backend:
+    container_name: artworks-backend-dev
+    build:
+      dockerfile: Dockerfile.dev
+    entrypoint: ["./entrypoint.sh"]
+    ports:
+     - 3000:3000
+    depends_on:
+      database:
+        condition: service_healthy

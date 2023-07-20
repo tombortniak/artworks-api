@@ -3,6 +3,8 @@ services:
   database:
     container_name: artworks-database-dev
     image: postgres:latest
+    ports:
+      - 5433:5432
     environment:
       - POSTGRES_DB
       - POSTGRES_USER
@@ -17,11 +19,12 @@ services:
       - artworks-network
   backend:
     container_name: artworks-backend-dev
-    build:
-      dockerfile: Dockerfile.dev
+    build: .
     entrypoint: ["./entrypoint.sh"]
     ports:
      - 3000:3000
+    environment:
+      - RAILS_MASTER_KEY
     depends_on:
       database:
         condition: service_healthy

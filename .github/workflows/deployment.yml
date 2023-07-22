@@ -1,9 +1,5 @@
 name: Deployment
 on:
-  workflow_run:
-    workflows: [Build]
-    types:
-      - completed
   push:
     branches:
       - master
@@ -15,7 +11,7 @@ jobs:
       - name: Log into server and deploy
         uses: appleboy/ssh-action@v0.1.10
         env:
-          RAILS_ENV: prod
+          RAILS_ENV: production
           RAILS_MASTER_KEY: ${{ secrets.RAILS_PRODUCTION_KEY }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -26,23 +22,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT }}
+          envs: RAILS_ENV,RAILS_MASTER_KEY,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB
           script: |
-            git clone ${{ github.server_url }}/${{ github.repository}}.git
-            docker compose -f ${{ github.event.repository.name }}/docker-compose.yml up --build -d
-            rm -rf ${{ github.event.repository.name }}
-      - name: Create release
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const tag = '${{ github.head_ref }}'.split('/').pop()
-            await github.rest.repos.createRelease({
-              owner: '${{ github.repository_owner }}',
-              repo: '${{ github.event.repository.name}}',
-              tag_name: tag,
-              name: `Release v${tag}`,
-              target_commitish: 'master',
-              draft: false,
-              prerelease: false,
-              generate_release_notes: false
-            });
+            git clone ${{ github.server_url }}/${{ github.repository }}.git
+            cd ${{ github.event.repository.name }}
+            docker compose up --build -d
+            cd .. && rm -rf ${{ github.event.repository.name }}

@@ -4,7 +4,7 @@ on:
     workflows: [Build]
     types:
       - completed
-  pull_request:
+  pull_requests:
     branches:
       - master
 jobs:
@@ -28,7 +28,9 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             git clone ${{ github.server_url }}/${{ github.repository}}.git
+            cd ${{ github.event.repository.name }}
             docker compose -f ${{ github.event.repository.name }}/docker-compose.yml up --build -d
+            cd .. && rm -rf ${{ github.event.repository.name }}
       - name: Create release
         uses: actions/github-script@v6
         with:

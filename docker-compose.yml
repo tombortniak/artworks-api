@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  database:
+    container_name: artworks-database
+    image: postgres:latest
+    ports:
+      - 20123:5432
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    restart: always
+    volumes:
+      - artworks-data:/var/lib/postgresql/data
+    networks:
+      - artworks-network
+  backend:
+    container_name: artworks-backend
+    build: .
+    entrypoint: ["./entrypoint.sh"]
+    ports:
+     - 30123:3000
+    environment:
+      - RAILS_MASTER_KEY
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
+    networks:
+      - artworks-network
+
+volumes:
+  artworks-data:
+    name: artworks-data
+
+networks:
+  artworks-network:
+    name: artworks-network

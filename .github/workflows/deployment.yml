@@ -11,7 +11,7 @@ jobs:
       - name: Log into server and deploy
         uses: appleboy/ssh-action@v0.1.10
         env:
-          RAILS_ENV: production
+          RAILS_ENV: "production"
           RAILS_MASTER_KEY: ${{ secrets.RAILS_PRODUCTION_KEY }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}

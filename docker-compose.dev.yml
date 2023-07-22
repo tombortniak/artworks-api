@@ -20,11 +20,12 @@ services:
   backend:
     container_name: artworks-backend-dev
     build: .
-    entrypoint: ["./entrypoint.sh"]
+    entrypoint: ["./entrypoint_dev.sh"]
     ports:
      - 3000:3000
     environment:
       - RAILS_MASTER_KEY
+      - RAILS_ENV
     depends_on:
       database:
         condition: service_healthy

@@ -1,9 +1,5 @@
 name: Deployment
 on:
-  workflow_run:
-    workflows: [Build]
-    types:
-      - completed
   pull_request:
     branches:
       - master
@@ -30,6 +26,7 @@ jobs:
             git clone ${{ github.server_url }}/${{ github.repository }}.git
             cd ${{ github.event.repository.name }}
             docker compose up --build -d
+            cd .. && rm -rf ${{ github.event.repository.name }}
       - name: Create release
         uses: actions/github-script@v6
         with:

@@ -27,7 +27,8 @@ services:
      - 30123:3000
     environment:
       - RAILS_MASTER_KEY
-      - RAILS_ENV
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE
     depends_on:
       database:
         condition: service_healthy

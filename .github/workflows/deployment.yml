@@ -28,8 +28,6 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             git clone ${{ github.server_url }}/${{ github.repository}}.git
-            docker compose -f ${{ github.event.repository.name }}/docker-compose.yml up --build -d
-            rm -rf ${{ github.event.repository.name }}
       - name: Create release
         uses: actions/github-script@v6
         with:

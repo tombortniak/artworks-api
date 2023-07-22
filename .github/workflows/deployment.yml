@@ -28,7 +28,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             git clone ${{ github.server_url }}/${{ github.repository }}.git
-            cd ${{ github.repository }}
+            cd ${{ github.event.repository.name }}
             docker compose up --build -d
       - name: Create release
         uses: actions/github-script@v6

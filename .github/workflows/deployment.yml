@@ -4,7 +4,7 @@ on:
     workflows: [Build]
     types:
       - completed
-  pull_requests:
+  pull_request:
     branches:
       - master
 jobs:
@@ -36,7 +36,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const tag = '${{ github.event.ref }}'.split('/').pop()
+            const tag = '${{ github.event.pull_request.base.ref }}'.split('/').pop()
             await github.rest.repos.createRelease({
               owner: '${{ github.repository_owner }}',
               repo: '${{ github.event.repository.name}}',

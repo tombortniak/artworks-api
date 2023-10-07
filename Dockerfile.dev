@@ -1,0 +1,10 @@
+FROM ruby:3.2.2
+
+RUN apt-get update -qq && apt-get install -y libpq-dev
+RUN useradd -ms /bin/bash artworks
+WORKDIR /usr/src/app/
+COPY . /usr/src/app/
+RUN chown -R artworks:artworks .
+RUN chmod +x entrypoint_dev.sh
+USER artworks
+RUN bundle install

@@ -1,6 +1,6 @@
 FROM ruby:3.2.2
 
-RUN apt-get update -qq && apt-get install -y libpq-dev
+RUN apt-get update -qq && apt-get install -y libpq-dev && apt-get clean
 RUN useradd -ms /bin/bash artworks
 WORKDIR /usr/src/app/
 COPY . /usr/src/app/

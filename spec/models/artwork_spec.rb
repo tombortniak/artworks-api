@@ -4,6 +4,12 @@ RSpec.describe Artwork, type: :model do
     subject {
         described_class.new(title: "Mona Lisa",
                             artist_id: 1,
+                            form: "painting",
+                            year_started: "1503",
+                            year_completed: nil,
+                            description_link: "https://test_link.com",
+                            height: 123.5,
+                            width: 76,
                             location: "Louvre",
                             city: "Paris",
                             country: "France",
@@ -13,8 +19,12 @@ RSpec.describe Artwork, type: :model do
         subject.title = nil
         expect(subject).to_not be_valid
     end
-    it "is not valid without an artist id" do
-        subject.artist_id = nil
+    it "is not valid without a type" do 
+        subject.form = nil
+        expect(subject).to_not be_valid
+    end
+    it "is not valid without a creation start year" do 
+        subject.year_started = nil
         expect(subject).to_not be_valid
     end
     it "is not valid without a location" do

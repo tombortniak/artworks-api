@@ -5,6 +5,6 @@ RUN useradd -ms /bin/bash artworks
 WORKDIR /usr/src/app/
 COPY . /usr/src/app/
 RUN chown -R artworks:artworks .
-RUN chmod +x entrypoint.sh
+RUN chmod +x entrypoint_dev.sh
 USER artworks
 RUN bundle install

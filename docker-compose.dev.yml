@@ -19,7 +19,9 @@ services:
       - artworks-network
   backend:
     container_name: artworks-backend-dev
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     entrypoint: ["./entrypoint_dev.sh"]
     ports:
      - 3000:3000

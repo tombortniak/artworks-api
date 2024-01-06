@@ -1,4 +1,3 @@
-FROM nginx:1.25.3
+FROM nginxinc/nginx-unprivileged:1.25.3
 
 COPY nginx.conf /etc/nginx/nginx.conf
-RUN mkdir -p /www/data/ && chmod -R 755 /www/data/

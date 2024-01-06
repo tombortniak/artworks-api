@@ -35,10 +35,20 @@ services:
     restart: always
     networks:
       - artworks-network
+  nginx:
+    container_name: artworks-nginx
+    build: ./nginx
+    volumes:
+      - artworks-storage:/www/data
+    restart: always
+    ports:
+      - 40125:80
 
 volumes:
   artworks-data:
     name: artworks-data
+  artworks-storage:
+    name: artworks-storage
 
 networks:
   artworks-network:

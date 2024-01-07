@@ -14,3 +14,9 @@ class Api::V1::ArtworksController < Api::V1::ApplicationController
     render json: @artwork
   end
 end
+
+class BigDecimal
+  def as_json
+    to_f
+  end
+end

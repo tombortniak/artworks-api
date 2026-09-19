@@ -1,4 +1,4 @@
-FROM ruby:3.2.2
+FROM ruby:3.4.10
 
 RUN apt-get update -qq && apt-get install -y libpq-dev && apt-get clean
 RUN useradd -ms /bin/bash artworks
